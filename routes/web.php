@@ -25,7 +25,7 @@ Route::get('/disclaimer', [App\Http\Controllers\DisclaimerController::class, 'in
 Route::get('/pricing', [App\Http\Controllers\PricingController::class, 'index'])->name('pricing');
 Route::get('/support', [App\Http\Controllers\SupportController::class, 'index'])->name('support');
 Route::get('/refer', [App\Http\Controllers\ReferController::class, 'index'])->name('refer');
-Route::get('/checkout', [App\Http\Controllers\SubscriptionController::class, 'showSubscription'])->name('checkout');
+Route::get('/checkout/{id}', [App\Http\Controllers\SubscriptionController::class, 'showSubscription'])->name('checkout');
 
 Route::get('/home', [App\Http\Controllers\DashboardController::class, 'index'])->name('home');
 

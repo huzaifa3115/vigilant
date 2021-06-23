@@ -24,7 +24,7 @@
             <li>24/7 trading chat rooms</li>
             <li>Access to daily live stream trading</li>
           </ul>
-          <a role="button" class="btn btn-lg btn-block btn-outline-primary pricing-button" href="{{ route('checkout') }}">Sign up
+          <a role="button" class="btn btn-lg btn-block btn-outline-primary pricing-button" href="{{ route('checkout', 1) }}">Sign up
             for free</a>
         </div>
       </div>
@@ -43,7 +43,7 @@
             <li>Courses to help you succeed in Engineering, Programming, Accounting, and any other requested career
               course.</li>
           </ul>
-          <a role="button" class="btn btn-lg btn-block btn-primary pricing-button" href="{{ route('checkout') }}">Sign up for
+          <a role="button" class="btn btn-lg btn-block btn-primary pricing-button" href="{{ route('checkout', 2) }}">Sign up for
             free</a>
         </div>
       </div>

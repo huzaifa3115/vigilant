@@ -69,7 +69,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">@</span>
               </div>
-              <input type="text" class="form-control" id="username" placeholder="Username" required="">
+              <input type="text" class="form-control" id="userName" placeholder="Username" required="">
               <div class="invalid-feedback" style="width: 100%;">
                 Your username is required.
               </div>
@@ -133,9 +133,15 @@
           </div>
           <hr class="mb-4">
 
+          @if($id == 1)
+            <input type="hidden" id="plan-silver" name="plan" value='{{ $plans[1]->id }}'>
+          @else
+            <input type="hidden" id="plan-silver" name="plan" value='{{ $plans[0]->id }}'>
+          @endif
+
           <h4 class="mb-3">Payment</h4>
 
-          <div class="d-block my-3">
+          <!-- <div class="d-block my-3">
             <div class="custom-control custom-radio">
               <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
               <label class="custom-control-label" for="credit">Credit card</label>
@@ -148,25 +154,26 @@
               <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
               <label class="custom-control-label" for="paypal">Paypal</label>
             </div>
-          </div>
+          </div> -->
           <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="cc-name">Name on card</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="" required="">
-              <small class="text-muted">Full name as displayed on card</small>
-              <div class="invalid-feedback">
+            <div class="col-md-12 mb-3">
+              <label for="cc-name">Card Holder Name</label>
+              <input id="card-holder-name" type="text" class="form-control">
+              <!-- <label for="card-holder-name">Card Holder Name</label> -->
+              <!-- <small class="text-muted">Full name as displayed on card</small> -->
+              <!-- <div class="invalid-feedback">
                 Name on card is required
-              </div>
+              </div> -->
             </div>
-            <div class="col-md-6 mb-3">
+            <!-- <div class="col-md-6 mb-3">
               <label for="cc-number">Credit card number</label>
               <div id="cc-number" ></div>
               <div class="invalid-feedback">
                 Credit card number is required
               </div>
-            </div>
+            </div> -->
           </div>
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-3 mb-3">
               <label for="cc-expiration">Expiration</label>
               <div id="cc-expiration" ></div>
@@ -181,50 +188,35 @@
                 Security code required
               </div>
             </div>
-          </div>
-          <hr class="mb-4">
-          <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+          </div> -->
+          <!-- <hr class="mb-4"> -->
+          <!-- <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button> -->
+        </form>
+        <form action="/subscribe" method="POST" id="subscribe-form">
+            @csrf
+            <div class="form">
+                <label for="card-element">Credit or debit card</label>
+                <div id="card-element" class="form-control">
+                </div>
+                <!-- Used to display form errors. -->
+                <div id="card-errors" role="alert"></div>
+            </div>
+            <div class="stripe-errors"></div>
+              @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                    {{ $error }}<br>
+                    @endforeach
+                </div>
+              @endif
+            <div class="form-group text-center mt-4">
+                <button  id="card-button" data-secret="{{ $intent->client_secret }}" class="btn btn-lg btn-success btn-block" type="button">Continue To Checkout</button>
+            </div>
         </form>
       </div>
     </div>
   </div>
-  <form action="/subscribe" method="POST" id="subscribe-form">
-    <div class="form-group">
-        <div class="row">
-            @foreach($plans as $plan)
-            <div class="col-md-4">
-                <div class="subscription-option">
-                    <input type="radio" id="plan-silver" name="plan" value='{{$plan->id}}'>
-                    <label for="plan-silver">
-                        <span class="plan-price">{{$plan->currency}}{{$plan->amount/100}}<small> /{{$plan->interval}}</small></span>
-                        <span class="plan-name">{{$plan->product->name}}</span>
-                    </label>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-    <input id="card-holder-name" type="text"><label for="card-holder-name">Card Holder Name</label>
-    @csrf
-    <div class="form-row">
-        <label for="card-element">Credit or debit card</label>
-        <div id="card-element" class="form-control">
-        </div>
-        <!-- Used to display form errors. -->
-        <div id="card-errors" role="alert"></div>
-    </div>
-    <div class="stripe-errors"></div>
-    @if (count($errors) > 0)
-    <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-        {{ $error }}<br>
-        @endforeach
-    </div>
-    @endif
-    <div class="form-group text-center">
-        <button  id="card-button" data-secret="{{ $intent->client_secret }}" class="btn btn-lg btn-success btn-block" type="button">SUBMIT</button>
-    </div>
-</form>
+  
 @endsection
 
 <script src="https://js.stripe.com/v3/"></script>
@@ -275,6 +267,17 @@
     // });
 
     const cardHolderName = document.getElementById('card-holder-name');
+    const firstName = document.getElementById('firstName');
+    const lastName = document.getElementById('lastName');
+    const userName = document.getElementById('userName');
+    const email = document.getElementById('email');
+    const address = document.getElementById('address');
+    const address2 = document.getElementById('address2');
+    const country = document.getElementById('country');
+    const state = document.getElementById('state');
+    const zip = document.getElementById('zip');
+    const plan = document.getElementById('plan-silver');
+
     const cardButton = document.getElementById('card-button');
     const clientSecret = cardButton.dataset.secret;
 
@@ -299,11 +302,75 @@
     function paymentMethodHandler(payment_method) {
         console.log(payment_method)
         var form = document.getElementById('subscribe-form');
+
         var hiddenInput = document.createElement('input');
+        var inputFirstName = document.createElement('input');
+        var inputLastName = document.createElement('input');
+        var inputUserName = document.createElement('input');
+        var inputEmail = document.createElement('input');
+        var inputAddress = document.createElement('input');
+        var inputAddress2 = document.createElement('input');
+        var inputCountry = document.createElement('input');
+        var inputState = document.createElement('input');
+        var inputZip = document.createElement('input');
+        var inputPlan = document.createElement('input');
+        
         hiddenInput.setAttribute('type', 'hidden');
         hiddenInput.setAttribute('name', 'payment_method');
         hiddenInput.setAttribute('value', payment_method);
+
+        inputFirstName.setAttribute('type', 'hidden');
+        inputFirstName.setAttribute('name', 'first_name');
+        inputFirstName.setAttribute('value', firstName.value);
+
+        inputLastName.setAttribute('type', 'hidden');
+        inputLastName.setAttribute('name', 'last_name');
+        inputLastName.setAttribute('value', lastName.value);
+
+        inputUserName.setAttribute('type', 'hidden');
+        inputUserName.setAttribute('name', 'user_name');
+        inputUserName.setAttribute('value', userName.value);
+
+        inputEmail.setAttribute('type', 'hidden');
+        inputEmail.setAttribute('name', 'email');
+        inputEmail.setAttribute('value', email.value);
+
+        inputAddress.setAttribute('type', 'hidden');
+        inputAddress.setAttribute('name', 'address');
+        inputAddress.setAttribute('value', address.value);
+
+        inputAddress2.setAttribute('type', 'hidden');
+        inputAddress2.setAttribute('name', 'address2');
+        inputAddress2.setAttribute('value', address2.value);
+
+        inputCountry.setAttribute('type', 'hidden');
+        inputCountry.setAttribute('name', 'country');
+        inputCountry.setAttribute('value', country.value);
+
+        inputState.setAttribute('type', 'hidden');
+        inputState.setAttribute('name', 'state');
+        inputState.setAttribute('value', state.value);
+
+        inputZip.setAttribute('type', 'hidden');
+        inputZip.setAttribute('name', 'zip');
+        inputZip.setAttribute('value', zip.value);
+
+        inputPlan.setAttribute('type', 'hidden');
+        inputPlan.setAttribute('name', 'plan');
+        inputPlan.setAttribute('value', plan.value);
+
         form.appendChild(hiddenInput);
+        form.appendChild(inputFirstName);
+        form.appendChild(inputLastName);
+        form.appendChild(inputUserName);
+        form.appendChild(inputEmail);
+        form.appendChild(inputAddress);
+        form.appendChild(inputAddress2);
+        form.appendChild(inputCountry);
+        form.appendChild(inputState);
+        form.appendChild(inputZip);
+        form.appendChild(inputPlan);
+
         form.submit();
     }
   });
