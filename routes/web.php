@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 // Route::get('/', function () {
 //     return view('index');
@@ -25,6 +25,9 @@ Route::get('/disclaimer', [App\Http\Controllers\DisclaimerController::class, 'in
 Route::get('/pricing', [App\Http\Controllers\PricingController::class, 'index'])->name('pricing');
 Route::get('/support', [App\Http\Controllers\SupportController::class, 'index'])->name('support');
 Route::get('/refer', [App\Http\Controllers\ReferController::class, 'index'])->name('refer');
-Route::get('/checkout', [App\Http\Controllers\PricingController::class, 'checkout'])->name('checkout');
+Route::get('/checkout', [App\Http\Controllers\SubscriptionController::class, 'showSubscription'])->name('checkout');
 
 Route::get('/home', [App\Http\Controllers\DashboardController::class, 'index'])->name('home');
+
+Route::get('/subscribe', [App\Http\Controllers\SubscriptionController::class, 'showSubscription']);
+Route::post('/subscribe', [App\Http\Controllers\SubscriptionController::class, 'processSubscription']);
