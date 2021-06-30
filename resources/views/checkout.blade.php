@@ -49,14 +49,14 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName">First name</label>
-              <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+              <input type="text" class="form-control" id="firstName" placeholder="" value="{{ auth()->user()->name }}" readonly required="">
               <div class="invalid-feedback">
                 Valid first name is required.
               </div>
             </div>
             <div class="col-md-6 mb-3">
               <label for="lastName">Last name</label>
-              <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+              <input type="text" class="form-control" id="lastName" placeholder="" value="{{ auth()->user()->name }}" readonly required="">
               <div class="invalid-feedback">
                 Valid last name is required.
               </div>
@@ -69,7 +69,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">@</span>
               </div>
-              <input type="text" class="form-control" id="userName" placeholder="Username" required="">
+              <input type="text" class="form-control" id="userName" value="{{ auth()->user()->name }}" readonly placeholder="Username" required="">
               <div class="invalid-feedback" style="width: 100%;">
                 Your username is required.
               </div>
@@ -78,7 +78,7 @@
 
           <div class="mb-3">
             <label for="email">Email <span class="text-muted">(Optional)</span></label>
-            <input type="email" class="form-control" id="email" placeholder="you@example.com">
+            <input type="email" class="form-control" id="email" value="{{ auth()->user()->email }}" readonly placeholder="you@example.com">
             <div class="invalid-feedback">
               Please enter a valid email address for shipping updates.
             </div>
@@ -216,7 +216,7 @@
       </div>
     </div>
   </div>
-  
+
 @endsection
 
 <script src="https://js.stripe.com/v3/"></script>
@@ -314,7 +314,7 @@
         var inputState = document.createElement('input');
         var inputZip = document.createElement('input');
         var inputPlan = document.createElement('input');
-        
+
         hiddenInput.setAttribute('type', 'hidden');
         hiddenInput.setAttribute('name', 'payment_method');
         hiddenInput.setAttribute('value', payment_method);
