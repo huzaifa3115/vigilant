@@ -31,3 +31,6 @@ Route::get('/home', [App\Http\Controllers\DashboardController::class, 'index'])-
 
 Route::get('/subscribe', [App\Http\Controllers\SubscriptionController::class, 'showSubscription']);
 Route::post('/subscribe', [App\Http\Controllers\SubscriptionController::class, 'processSubscription']);
+
+Route::get('/discord', [App\Http\Controllers\SubscriptionController::class, 'discordLogin']);
+Route::get('/discord-redirect', [App\Http\Controllers\SubscriptionController::class, 'handleProviderCallback']);

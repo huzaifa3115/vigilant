@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use \Stripe\Stripe;
-use Illuminate\Http\Request;
-use Exception;
-use App\Models\User;
 use App\Models\Payment;
+use App\Models\User;
 use App\Notifications\SubscriptionNotification;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+use \Stripe\Stripe;
 
 class SubscriptionController extends Controller
 {
@@ -42,7 +43,7 @@ class SubscriptionController extends Controller
             'user' => $user,
             'intent' => $user->createSetupIntent(),
             'plans' => $plans,
-            'id' => $id
+            'id' => $id,
         ]);
     }
     public function processSubscription(Request $request)
@@ -57,7 +58,7 @@ class SubscriptionController extends Controller
             $user->newSubscription('default', $plan)->create($paymentMethod, [
                 'email' => $user->email,
             ]);
-            
+
             $this->createPayments($request->all(), $user);
 
             $seller = User::findOrFail(Auth::user()->id);
@@ -70,8 +71,8 @@ class SubscriptionController extends Controller
         return redirect()->route('index')->with('success', 'Your plan subscribed successfully');
     }
 
-
-    public function createPayments($request, $user){
+    public function createPayments($request, $user)
+    {
 
         Payment::create([
             'user_id' => Auth::user()->id,
@@ -88,5 +89,18 @@ class SubscriptionController extends Controller
             'state' => $request['state'],
             'zip' => $request['zip'],
         ]);
+    }
+
+    public function discordLogin()
+    {
+        return Socialite::driver('discord')->redirect();
+    }
+
+    public function handleProviderCallback()
+    {
+        $user = Socialite::driver('discord')->user();
+        $current_user = Auth::user();
+        dd($user, get_class_methods($user));
+        // $user->token;
     }
 }

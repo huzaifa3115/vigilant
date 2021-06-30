@@ -36,4 +36,11 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'discord' => [
+        'token' => 'ODU3NzE5MzE0MTA1NDk5NzA4.YNTrXA.sf9NqZdOIAsJxtlFN09UGAYX1As',
+        'client_id' => '857719314105499708',
+        'client_secret' => 'e0kpz4gHq_N9lhl16il-Z238gPHA8vRE',
+        'redirect' => 'http://127.0.0.1:8000/discord-redirect',
+    ],
+
 ];
