@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\User;
-use App\Notifications\SubscriptionNotification;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Http;
 use \Stripe\Stripe;
 
 class SubscriptionController extends Controller
@@ -48,21 +47,24 @@ class SubscriptionController extends Controller
     }
     public function processSubscription(Request $request)
     {
-        $user = Auth::user();
-        $paymentMethod = $request->input('payment_method');
 
-        $user->createOrGetStripeCustomer();
-        $user->addPaymentMethod($paymentMethod);
-        $plan = $request->input('plan');
         try {
-            $user->newSubscription('default', $plan)->create($paymentMethod, [
+            $user = Auth::user();
+            $paymentMethod = $request->input('payment_method');
+
+            $user->createOrGetStripeCustomer();
+            $user->addPaymentMethod($paymentMethod);
+            $plan = $request->input('plan');
+            $ss = $user->newSubscription('default', $plan)->create($paymentMethod, [
                 'email' => $user->email,
             ]);
 
             $this->createPayments($request->all(), $user);
 
-            $seller = User::findOrFail(Auth::user()->id);
-            $seller->notify(new SubscriptionNotification($seller));
+            // $seller = User::findOrFail(Auth::user()->id);
+            // $seller->notify(new SubscriptionNotification($seller));
+
+            return redirect('/discord');
 
         } catch (\Exception $e) {
             return back()->withErrors(['message' => 'Error creating subscription. ' . $e->getMessage()]);
@@ -93,14 +95,41 @@ class SubscriptionController extends Controller
 
     public function discordLogin()
     {
-        return Socialite::driver('discord')->redirect();
+        return redirect('https://discord.com/oauth2/authorize?client_id=857719314105499708&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fdiscord-redirect&scope=email+identify+guilds.join&response_type=code');
     }
 
-    public function handleProviderCallback()
+    public function handleProviderCallback(Request $request)
     {
-        $user = Socialite::driver('discord')->user();
-        $current_user = Auth::user();
-        dd($user, get_class_methods($user));
-        // $user->token;
+        //verify code and get access token
+        $response = Http::asForm()->post('https://discord.com/api/oauth2/token', [
+            'grant_type' => 'authorization_code',
+            'client_id' => '857719314105499708',
+            'client_secret' => 'e0kpz4gHq_N9lhl16il-Z238gPHA8vRE',
+            'code' => $request->get('code'),
+            'redirect_uri' => 'http://127.0.0.1:8000/discord-redirect',
+        ]);
+
+        //get user id and object by sending above access token as bearer
+        $user = Http::withHeaders([
+            'authorization' => 'Bearer [token]',
+            'content-type' => 'application/json',
+        ])->get('https://discord.com/api/users/@me');
+
+        //add user in server/guild by adding guild id(static) and user id taken from above
+        // if ($response->successful()) {
+        $reswponse = Http::withHeaders([
+            'authorization' => 'Bot ODU3NzE5MzE0MTA1NDk5NzA4.YNTrXA.sf9NqZdOIAsJxtlFN09UGAYX1As',
+            'content-type' => 'application/json',
+        ])->put('https://discord.com/api/guilds/857714779481178172/members/857768874920509470', [
+            'access_token' => 'fvv31DarnELDQaX4oLveAGoFRX40sU',
+        ]);
+
+        // dd($reswponse->json(), $reswponse->body());
+        // } else {
+        //     // dd($response->json());
+        return redirect()->route('index')->with('success', 'User Successfully Subscribe');
+        // }
+
+        // dd($response->json());
     }
 }
