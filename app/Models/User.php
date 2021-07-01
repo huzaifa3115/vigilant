@@ -20,6 +20,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'stripe_id',
+        'pm_type',
+        'pm_last_four',
+        'trail_ends_at',
+        'discord_access_token',
+        'discord_user_id',
     ];
 
     /**
