@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SubscriptionStoreRequest;
 use App\Models\Payment;
 use App\Models\User;
 use Exception;
@@ -45,9 +46,8 @@ class SubscriptionController extends Controller
             'id' => $id,
         ]);
     }
-    public function processSubscription(Request $request)
+    public function processSubscription(SubscriptionStoreRequest $request)
     {
-
         try {
             $user = Auth::user();
             $paymentMethod = $request->input('payment_method');
