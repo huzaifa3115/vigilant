@@ -132,8 +132,6 @@ class SubscriptionController extends Controller
                     'access_token' => $response->json('access_token'),
                 ]);
 
-                dd($result->json());
-
                 if ($result->successful()) {
                     return redirect()->route('index')->with('success', 'User Successfully Subscribe');
                 } else {
