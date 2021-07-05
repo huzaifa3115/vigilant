@@ -95,7 +95,7 @@ class SubscriptionController extends Controller
 
     public function discordLogin()
     {
-        return redirect('https://discord.com/oauth2/authorize?client_id=857719314105499708&redirect_uri='.urlencode(env('DISCORD_URL')).'&scope=email+identify+guilds.join&response_type=code');
+        return redirect('https://discord.com/oauth2/authorize?client_id=861621888086310944&redirect_uri=' . urlencode(env('DISCORD_URL')) . '&scope=email+identify+guilds.join&response_type=code');
     }
 
     public function handleProviderCallback(Request $request)
@@ -103,45 +103,48 @@ class SubscriptionController extends Controller
         //verify code and get access token
         $response = Http::asForm()->post('https://discord.com/api/oauth2/token', [
             'grant_type' => 'authorization_code',
-            'client_id' => '857719314105499708',
-            'client_secret' => 'e0kpz4gHq_N9lhl16il-Z238gPHA8vRE',
+            'client_id' => '861621888086310944',
+            'client_secret' => 'CyU-XvwDFKVR2V8A_a3Yq3tJ_mmtkb7c',
             'code' => $request->get('code'),
             'redirect_uri' => env('DISCORD_URL'),
         ]);
 
-        if($response->successful()){
+        if ($response->successful()) {
             // get user id and object by sending above access token as bearer
+
             $user = Http::withHeaders([
-                'authorization' => $response->json('token_type') .' '. $response->json('access_token'),
+                'authorization' => $response->json('token_type') . ' ' . $response->json('access_token'),
                 'content-type' => 'application/json',
             ])->get('https://discord.com/api/users/@me');
 
-
-            if($user->successful()){
+            if ($user->successful()) {
                 $customer = User::findOrFail(Auth::user()->id);
                 $customer->update([
                     'discord_access_token' => $response->json('access_token'),
                     'discord_user_id' => $user->json('id'),
                 ]);
+
                 // add user in server/guild by adding guild id(static) and user id taken from above
                 $result = Http::withHeaders([
-                    'authorization' => 'Bot ODU3NzE5MzE0MTA1NDk5NzA4.YNTrXA.sf9NqZdOIAsJxtlFN09UGAYX1As',
+                    'authorization' => 'Bot ODYxNjIxODg4MDg2MzEwOTQ0.YOMd6g.ZmBunHz6lltG9bOv6An214kSlUc',
                     'content-type' => 'application/json',
-                ])->put('https://discord.com/api/guilds/857714779481178172/members/'.$user->json('id'), [
+                ])->put('https://discord.com/api/guilds/785207462114230293/members/' . $user->json('id'), [
                     'access_token' => $response->json('access_token'),
                 ]);
 
-                if($result->successful()){
+                dd($result->json());
+
+                if ($result->successful()) {
                     return redirect()->route('index')->with('success', 'User Successfully Subscribe');
-                }else{
-                    return redirect()->route('index')->with('success', 'Result Not Get');
+                } else {
+                    return redirect()->route('index')->with('success', 'Result Not Found');
                 }
 
-            }else{
-                return redirect()->route('index')->with('success', 'User Not Get');
+            } else {
+                return redirect()->route('index')->with('success', 'User Not Found');
             }
-        }else{
-            return redirect()->route('index')->with('success', 'Access Token Not Get');
+        } else {
+            return redirect()->route('index')->with('success', 'Access Token Not Found');
         }
         return redirect()->route('index')->with('success', 'User Successfully Subscribe');
     }
