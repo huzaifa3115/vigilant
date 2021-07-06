@@ -303,3 +303,7 @@ h4.display-4.limitaion-text {
     letter-spacing: 2px;
     /* line-height: 21px; */
 }
+
+button.navbar-toggler {
+    border: 2px solid #ececec;
+}
