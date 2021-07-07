@@ -100,6 +100,20 @@ class SubscriptionController extends Controller
 
     public function handleProviderCallback(Request $request)
     {
+
+        // $user = Http::withHeaders([
+        //     'authorization' => 'Bot ODYxNjIxODg4MDg2MzEwOTQ0.YOMd6g.ZmBunHz6lltG9bOv6An214kSlUc',
+        //     'content-type' => 'application/json',
+        // ])->get('https://discord.com/api/guilds/785207462114230293/roles');
+
+        // "id" => "788259785207840818"
+        // "name" => "Private"
+
+        // "id" => "785399225898631169"
+        // "name" => "Premium"
+
+        // dd($user, $user->json());
+
         //verify code and get access token
         $response = Http::asForm()->post('https://discord.com/api/oauth2/token', [
             'grant_type' => 'authorization_code',
