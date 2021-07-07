@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use \Stripe\Stripe;
+use Carbon\Carbon;
 
 class SubscriptionController extends Controller
 {
@@ -48,6 +49,7 @@ class SubscriptionController extends Controller
     }
     public function processSubscription(SubscriptionStoreRequest $request)
     {
+        // dd($request->all());
         try {
             $user = Auth::user();
             $paymentMethod = $request->input('payment_method');
@@ -59,7 +61,13 @@ class SubscriptionController extends Controller
                 'email' => $user->email,
             ]);
 
+            $ss->ends_at = Carbon::now()->addMonth();
+            $ss->save();
+
             $this->createPayments($request->all(), $user);
+
+            $user->package_type = $request->get('package_type');
+            $user->save();
 
             // $seller = User::findOrFail(Auth::user()->id);
             // $seller->notify(new SubscriptionNotification($seller));
@@ -100,7 +108,6 @@ class SubscriptionController extends Controller
 
     public function handleProviderCallback(Request $request)
     {
-
         // $user = Http::withHeaders([
         //     'authorization' => 'Bot ODYxNjIxODg4MDg2MzEwOTQ0.YOMd6g.ZmBunHz6lltG9bOv6An214kSlUc',
         //     'content-type' => 'application/json',
@@ -122,6 +129,7 @@ class SubscriptionController extends Controller
             'code' => $request->get('code'),
             'redirect_uri' => env('DISCORD_URL'),
         ]);
+
 
         if ($response->successful()) {
             // get user id and object by sending above access token as bearer
@@ -147,6 +155,23 @@ class SubscriptionController extends Controller
                 ]);
 
                 if ($result->successful()) {
+
+                    $loginUser = Auth::user();
+
+                    $roleId = ($loginUser->package_type == 'premium') ? "785399225898631169" : "788259785207840818";
+
+                    $role = Http::withHeaders([
+                        'authorization' => 'Bot ODYxNjIxODg4MDg2MzEwOTQ0.YOMd6g.ZmBunHz6lltG9bOv6An214kSlUc',
+                        'content-type' => 'application/json',
+                    ])->put('https://discord.com/api/guilds/785207462114230293/members/'. $user->json('id') . '/roles/' . $roleId);
+
+
+                    if ($role->successful()){
+                        return redirect()->route('index')->with('success', 'User Successfully Subscribe');
+                    }else{
+                        return redirect()->route('index')->with('success', 'Roles Not Add');
+                    }
+
                     return redirect()->route('index')->with('success', 'User Successfully Subscribe');
                 } else {
                     return redirect()->route('index')->with('success', 'Result Not Found');
