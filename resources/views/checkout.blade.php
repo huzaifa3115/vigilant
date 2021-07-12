@@ -100,8 +100,10 @@
 
           @if($id == 1)
             <input type="hidden" id="plan-silver" name="plan" value='{{ $plans[1]->id }}'>
+            <input type="hidden" id="package_type" name="package_type" value="premium">
           @else
             <input type="hidden" id="plan-silver" name="plan" value='{{ $plans[0]->id }}'>
+            <input type="hidden" id="package_type" name="package_type" value="private">
           @endif
 
           <h4 class="mb-3">Payment</h4>
@@ -242,6 +244,7 @@
     const state = document.getElementById('state');
     const zip = document.getElementById('zip');
     const plan = document.getElementById('plan-silver');
+    const packageType = document.getElementById('package_type');
 
     const cardButton = document.getElementById('card-button');
     const clientSecret = cardButton.dataset.secret;
@@ -279,6 +282,7 @@
         var inputState = document.createElement('input');
         var inputZip = document.createElement('input');
         var inputPlan = document.createElement('input');
+        var inputPackageType = document.createElement('input');
 
         hiddenInput.setAttribute('type', 'hidden');
         hiddenInput.setAttribute('name', 'payment_method');
@@ -323,6 +327,10 @@
         inputPlan.setAttribute('type', 'hidden');
         inputPlan.setAttribute('name', 'plan');
         inputPlan.setAttribute('value', plan.value);
+        
+        inputPackageType.setAttribute('type', 'hidden');
+        inputPackageType.setAttribute('name', 'package_type');
+        inputPackageType.setAttribute('value', packageType.value);
 
         form.appendChild(hiddenInput);
         form.appendChild(inputFirstName);
@@ -335,6 +343,7 @@
         form.appendChild(inputState);
         form.appendChild(inputZip);
         form.appendChild(inputPlan);
+        form.appendChild(inputPackageType);
 
         form.submit();
     }

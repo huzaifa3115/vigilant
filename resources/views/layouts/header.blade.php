@@ -6,42 +6,14 @@
         <a class="title-anchor" style="margin-top: 8px;" href="{{ route('index') }}">Vigilant Trading Group</a>
     </h5>
 
-
-    <span class="screen-darken"></span>
-    {{--            <nav class="navbar navbar-expand-lg my-2 my-md-0 mr-md-3">--}}
-    {{--                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">--}}
-    {{--                    <span class="navbar-toggler-icon"></span>--}}
-    {{--                </button>--}}
-    {{--                <div class="collapse navbar-collapse" id="navbarNav">--}}
-    {{--                    <ul class="navbar-nav">--}}
-    {{--                        <li class="nav-item active">--}}
-    {{--                            <a class="p-2 text-dark" href="{{ route('disclaimer') }}">Disclaimer</a>--}}
-    {{--                        </li>--}}
-    {{--                        <li class="nav-item">--}}
-    {{--                            <a class="p-2 text-dark" href="#">Blog</a>--}}
-    {{--                        </li>--}}
-    {{--                        <li class="nav-item">--}}
-    {{--                            <a class="p-2 text-dark" href="#">Reviews</a>--}}
-    {{--                        </li>--}}
-    {{--                        <li class="nav-item">--}}
-    {{--                            <a class="p-2 text-dark" href="{{ route('pricing') }}">Pricing</a>--}}
-    {{--                        </li>--}}
-    {{--                        <li class="nav-item">--}}
-    {{--                            <a class="p-2 text-dark" href="{{ route('about') }}">About Us</a>--}}
-    {{--                        </li>--}}
-    {{--                        <li class="nav-item">--}}
-    {{--                            <a class="p-2 text-dark" href="{{ route('index') }}">Home</a>--}}
-    {{--                        </li>--}}
-    {{--                    </ul>--}}
-    {{--                </div>--}}
-    {{--            </nav>--}}
+<span class="screen-darken"></span>
+    
+    
     <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <div class="offcanvas-header text-right">
                 <button class="btn-close float-end">X</button>
             </div>
-            <a class="navbar-brand" href="#" style="color: black">Menus</a>
-
             <ul class="navbar-nav">
                 <li class="nav-item mt-2 active">
                     <a class="p-2 text-dark" href="{{ route('disclaimer') }}">Disclaimer</a>
@@ -65,7 +37,7 @@
                 <li class="nav-item mt-2">
                     <a class="p-2 text-dark" href="{{ route('index') }}">Home</a>
                 </li>
-                <a class="btn btn-outline-primary" href="{{ route('support') }}">Support</a>
+                <a class="btn btn-outline-primary support_btn" href="{{ route('support') }}">Support</a>
             </ul>
 
         </div> <!-- container-fluid.// -->

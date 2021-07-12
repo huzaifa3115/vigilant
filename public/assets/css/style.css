@@ -375,3 +375,29 @@ button.navbar-toggler {
     }
 
 }
+
+
+
+@media (max-width: 768px){
+h5.my-0.mr-md-auto.font-weight-normal.row {
+    width: 100%;
+}
+
+h5.my-0.mr-md-auto.font-weight-normal.row a {
+    margin-left: 10%;
+}
+
+.support_btn {
+    margin-top: 20%;
+}
+
+.carousel-caption.text-left h1 {
+    font-size: 2em;
+}
+
+a.btn.btn-lg.btn-primary {
+    padding: 10px;
+    font-size: 1em;
+}
+
+}

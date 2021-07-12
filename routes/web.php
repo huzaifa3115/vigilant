@@ -36,3 +36,5 @@ Route::post('/subscribe', [App\Http\Controllers\SubscriptionController::class, '
 
 Route::get('/discord', [App\Http\Controllers\SubscriptionController::class, 'discordLogin']);
 Route::get('/discord-redirect', [App\Http\Controllers\SubscriptionController::class, 'handleProviderCallback']);
+
+Route::get('/cronjob', [App\Http\Controllers\CornJobController::class, 'index'])->name('cron.job');
