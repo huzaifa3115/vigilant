@@ -26,6 +26,8 @@ class User extends Authenticatable
         'trail_ends_at',
         'discord_access_token',
         'discord_user_id',
+        'refer_code',
+        'points'
     ];
 
     /**
@@ -36,6 +38,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'refer_code'
     ];
 
     /**

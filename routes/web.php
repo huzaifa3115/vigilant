@@ -24,8 +24,10 @@ Route::get('/about', [App\Http\Controllers\AboutUsController::class, 'index'])->
 Route::get('/disclaimer', [App\Http\Controllers\DisclaimerController::class, 'index'])->name('disclaimer');
 Route::get('/pricing', [App\Http\Controllers\PricingController::class, 'index'])->name('pricing');
 Route::get('/support', [App\Http\Controllers\SupportController::class, 'index'])->name('support');
-Route::get('/refer', [App\Http\Controllers\ReferController::class, 'index'])->name('refer');
+
 Route::middleware(['auth'])->group(function () {
+    Route::get('/refer', [App\Http\Controllers\ReferController::class, 'index'])->name('refer');
+    Route::post('/refer', [App\Http\Controllers\ReferController::class, 'store'])->name('refer.store');
     Route::get('/checkout/{id}', [App\Http\Controllers\SubscriptionController::class, 'showSubscription'])->name('checkout');
 });
 

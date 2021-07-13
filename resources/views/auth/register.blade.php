@@ -8,7 +8,7 @@
                 <h1 class="h3 mb-3 font-weight-normal text-center">Please Sign Up Here </h1>
                 <div class="form-group row">
                     <div class="col-md-12">
-                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" 
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
                             placeholder="Enter Name" name="name" value="{{ old('name') }}" autocomplete="name" autofocus>
                         @error('name')
                             <span class="invalid-feedback" role="alert">
@@ -20,7 +20,7 @@
 
                 <div class="form-group row">
                     <div class="col-md-12">
-                        <input id="email" type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror" 
+                        <input id="email" type="email" placeholder="Enter Email" class="form-control @error('email') is-invalid @enderror"
                             name="email" value="{{ old('email') }}" autocomplete="email">
                         @error('email')
                             <span class="invalid-feedback" role="alert">
@@ -32,7 +32,19 @@
 
                 <div class="form-group row">
                     <div class="col-md-12">
-                        <input id="password" type="password" placeholder="Enter Password" class="form-control @error('password') is-invalid @enderror" 
+                        <input id="refer_code" type="text" placeholder="Enter Referral Code" class="form-control @error('refer_code') is-invalid @enderror"
+                               name="refer_code" value="{{ old('refer_code') }}" autocomplete="refer_code">
+                        @error('refer_code')
+                        <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <input id="password" type="password" placeholder="Enter Password" class="form-control @error('password') is-invalid @enderror"
                             name="password" autocomplete="new-password">
 
                         @error('password')
@@ -45,7 +57,7 @@
 
                 <div class="form-group row">
                     <div class="col-md-12">
-                        <input id="password-confirm" type="password" placeholder="Enter Confirm Password" class="form-control" 
+                        <input id="password-confirm" type="password" placeholder="Enter Confirm Password" class="form-control"
                             name="password_confirmation" autocomplete="new-password">
                     </div>
                 </div>

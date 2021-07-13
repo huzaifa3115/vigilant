@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\ReferCode;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -49,11 +51,19 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $validate =  Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+
+        if($data['refer_code']){
+            $validate = Validator::make($data, [
+                'refer_code' => 'exists:users,refer_code'
+            ]);
+        }
+
+        return $validate;
     }
 
     /**
@@ -69,5 +79,24 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    protected function getPointsAndCreateReferHistory(array $data){
+
+        $user = User::whereReferCode($data['refer_code'])->get();
+        $updateUser = User::findOrFail($user[0]->id);
+        $points = $updateUser->points + 10;
+
+        $updateUser->update([
+            'points' => $points
+        ]);
+
+        $referCodeHistory = ReferCode::create([
+            'user_id' => Auth::user()->id,
+            'refer_by' => $updateUser->id,
+            'refer_code' => $data['refer_code']
+        ]);
+
+        return $updateUser;
     }
 }
