@@ -7,8 +7,8 @@
     </h5>
 
 <span class="screen-darken"></span>
-    
-    
+
+
     <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <div class="offcanvas-header text-right">
@@ -37,31 +37,36 @@
                 <li class="nav-item mt-2">
                     <a class="p-2 text-dark" href="{{ route('index') }}">Home</a>
                 </li>
-                <a class="btn btn-outline-primary support_btn" href="{{ route('support') }}">Support</a>
+                <br>
+                 <li class="nav-item mt-2">
+                    <a class="p-2 text-dark" href="{{ route('support') }}">Support</a>
+                </li>
+                <a class="btn btn-outline-primary support_btn" href="{{ route('pricing') }}">Upgrade</a>
+                   @if(Auth::user())
+                <li class="nav-item dropdown auth-header-btn" style="list-style: none;margin-left: 15px;">
+                    <a id="navbarDropdown" class="btn btn-outline-primary" href="#" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
+                </li>
+            @endif
             </ul>
 
         </div> <!-- container-fluid.// -->
     </nav>
 
 
-    @if(Auth::user())
-        <li class="nav-item dropdown" style="list-style: none;margin-left: 5px;">
-            <a id="navbarDropdown" class="btn btn-outline-primary" href="#" role="button" data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false" v-pre>
-                {{ Auth::user()->name }}
-            </a>
 
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('logout') }}"
-                   onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </div>
-        </li>
-    @endif
 </div>

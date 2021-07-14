@@ -376,7 +376,9 @@ button.navbar-toggler {
 
 }
 
-
+.mobile_support_btn{
+    display : none;
+}
 
 @media (max-width: 768px){
 h5.my-0.mr-md-auto.font-weight-normal.row {
@@ -388,7 +390,8 @@ h5.my-0.mr-md-auto.font-weight-normal.row a {
 }
 
 .support_btn {
-    margin-top: 20%;
+    /* display : none; */
+    margin-top: 10%;
 }
 
 .carousel-caption.text-left h1 {
@@ -398,6 +401,14 @@ h5.my-0.mr-md-auto.font-weight-normal.row a {
 a.btn.btn-lg.btn-primary {
     padding: 10px;
     font-size: 1em;
+}
+.auth-header-btn{
+    display : none;
+}
+
+.mobile_support_btn{
+    display : block;
+    margin-top: 20%;
 }
 
 }
