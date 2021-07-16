@@ -25,7 +25,7 @@ Route::get('/disclaimer', [App\Http\Controllers\DisclaimerController::class, 'in
 Route::get('/pricing', [App\Http\Controllers\PricingController::class, 'index'])->name('pricing');
 Route::get('/support', [App\Http\Controllers\SupportController::class, 'index'])->name('support');
 Route::get('/blogs', [App\Http\Controllers\HomeController::class, 'blog'])->name('blog');
-Route::get('/blogs/{id}', [App\Http\Controllers\HomeController::class, 'blogDetail'])->name('blog-detail');
+Route::get('/blogs/{blog}', [App\Http\Controllers\HomeController::class, 'blogDetail'])->name('blog-detail');
 Route::get('/reviews', [App\Http\Controllers\HomeController::class, 'review'])->name('review');
 
 Route::middleware(['auth'])->group(function () {

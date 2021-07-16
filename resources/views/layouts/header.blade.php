@@ -19,11 +19,11 @@
                     <a class="p-2 text-dark" href="{{ route('disclaimer') }}">Disclaimer</a>
                 </li><br>
                 <li class="nav-item mt-2">
-                    <a class="p-2 text-dark" href="#">Blog</a>
+                    <a class="p-2 text-dark" href="{{ route('blog') }}">Blog</a>
                 </li>
                 <br>
                 <li class="nav-item mt-2">
-                    <a class="p-2 text-dark" href="#">Reviews</a>
+                    <a class="p-2 text-dark" href="{{ route('review') }}">Reviews</a>
                 </li>
                 <br>
                 <li class="nav-item mt-2">

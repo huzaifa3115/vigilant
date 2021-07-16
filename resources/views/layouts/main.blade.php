@@ -13,7 +13,7 @@
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('assets/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <link href="http://fonts.cdnfonts.com/css/lemonmilk" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/lemonmilk" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">

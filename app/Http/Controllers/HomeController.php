@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
+use App\Models\Review;
 use App\Models\Slider;
 
 class HomeController extends Controller
@@ -29,16 +31,18 @@ class HomeController extends Controller
 
     public function blog()
     {
-        return view('blog');
+        $blogs = Blog::all();
+        return view('blog', compact('blogs'));
     }
 
-    public function blogDetail($id)
+    public function blogDetail(Blog $blog)
     {
-        return view('blog-detail');
+        return view('blog-detail', compact('blog'));
     }
 
     public function review()
     {
-        return view('review');
+        $reviews = Review::all();
+        return view('review', compact('reviews'));
     }
 }
