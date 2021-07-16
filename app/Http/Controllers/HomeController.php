@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Slider;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -26,5 +25,15 @@ class HomeController extends Controller
     {
         $sliders = Slider::all();
         return view('index', compact('sliders'));
+    }
+
+    public function blog()
+    {
+        return view('blog');
+    }
+
+    public function blogDetail($id)
+    {
+        return view('blog-detail');
     }
 }
