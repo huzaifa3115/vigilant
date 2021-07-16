@@ -36,4 +36,9 @@ class HomeController extends Controller
     {
         return view('blog-detail');
     }
+
+    public function review()
+    {
+        return view('review');
+    }
 }

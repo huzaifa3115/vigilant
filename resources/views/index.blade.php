@@ -43,7 +43,8 @@
 
     <div class="container wrapper">
         <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <h1 class="display-4 primary-text home-title">Vigilant <span class="secondary-text">Trading</span></h1>
+            <!-- <h1 class="display-4 primary-text home-title">Vigilant <span class="secondary-text">Trading</span></h1> -->
+            <img src="{{url('/assets/img/vigilant-logo.png')}}" alt="Vigilant Trading" class="main-logo"/>
             <a type="button" class="btn btn-lg btn-block btn-outline-primary join_now" href="{{ route('pricing') }}">Join Now</a>
         </div>
     </div>

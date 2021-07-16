@@ -416,3 +416,15 @@ img.blog-detail-image {
     width: 100%;
     margin-bottom: 5%;
 }
+img.header-logo {
+    width: 100px;
+}
+img.main-logo {
+    margin-bottom: 3%;
+}
+
+.review-img {
+    width: 100px;
+    border-radius: 50px;
+    height: 100px;
+}
