@@ -66,8 +66,6 @@ class Slider extends Model
         'title' => 'required',
         'image' => 'required',
         'description' => 'required',
-        'button_text' => 'required',
-        'button_url' => 'required'
     ];
 
 

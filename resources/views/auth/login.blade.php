@@ -7,14 +7,14 @@
                 @csrf
                 <h1 class="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
                 <label for="inputEmail" class="sr-only">Email address</label>
-                <input type="email" id="inputEmail" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email address" value="{{ old('email') }}" required autofocus>
+                <input type="email" id="inputEmail" name="email" id="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email address" value="{{ old('email') }}">
                 @error('email')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
                 <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" required>
+                <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password">
                 @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

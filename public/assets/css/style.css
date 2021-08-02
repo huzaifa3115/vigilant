@@ -417,7 +417,7 @@ img.blog-detail-image {
     margin-bottom: 5%;
 }
 img.header-logo {
-    width: 100px;
+    width: 50px!important;
 }
 img.main-logo {
     margin-bottom: 3%;

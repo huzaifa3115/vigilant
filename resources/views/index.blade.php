@@ -23,7 +23,11 @@
                             <h1>{{ $slider->title }}</h1>
                             <p>{{ $slider->description }}</p>
                             <p>
-                                <a class="btn btn-lg btn-primary" href="{{ $slider->button_url }}"
+                                @php
+                                    $arr = explode(":",$slider->button_url);
+                                    $arr2 = explode(".",$slider->button_url);
+                                @endphp
+                                <a class="btn btn-lg btn-primary" href="{{ ($arr[0] == 'http' || $arr[0] == 'https' || $arr2[0] == 'www') ? $slider->button_url : '#' }}"
                                    role="button">{{ $slider->button_text }}</a>
                             </p>
                         </div>
