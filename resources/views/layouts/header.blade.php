@@ -3,7 +3,9 @@
     <h5 class="my-0 mr-md-auto font-weight-normal row ">
         <button data-trigger="navbar_main" class="d-lg-none btn btn-warning" type="button"><span
                 class="navbar-toggler-icon"></span></button>
-        <a class="title-anchor" style="margin-top: 8px;" href="{{ route('index') }}"><img src="{{url('/assets/img/v-logo.png')}}" alt="Vigilant Trading Logo" class="header-logo"/></a>
+        <a class="title-anchor" style="margin-top: 8px;" href="{{ route('index') }}">
+            <img src="{{url('/assets/img/v-logo.png')}}" alt="Vigilant Trading Logo" class="header-logo"/>
+        </a>
     </h5>
 
 <span class="screen-darken"></span>

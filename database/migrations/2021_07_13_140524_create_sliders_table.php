@@ -23,7 +23,7 @@ class CreateSlidersTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('button_text');
-            $table->string('button_url');
+            $table->string('button_url')->nullable();
             $table->timestamps();
         });
     }
